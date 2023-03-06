@@ -7,8 +7,8 @@ export const TodolistsReducer = (state: TodolistType[], action: tsarType): Todol
             return state.filter(el => el.id !== action.payload.todolistId1)
         }
         case "ADD-TODOLIST":{
-            let newTodolistId = v1();
-            let newTodolist: TodolistType = {id: newTodolistId, title: action.payload.newTodolistTitle, filter: 'all'};
+           // let newTodolistId = v1();
+            let newTodolist: TodolistType = {id: action.todolistId, title: action.newTodolistTitle, filter: 'all'};
             return [...state,newTodolist]
         }
         case "CHANGE-TODOLIST-TITLE":{
@@ -20,7 +20,7 @@ export const TodolistsReducer = (state: TodolistType[], action: tsarType): Todol
     }
 }
 
-type tsarType = removeTodolistACType | addTodolistACType | changeTodolistTitleACType | changeFilterACType
+export type tsarType = removeTodolistACType | addTodolistACType | changeTodolistTitleACType | changeFilterACType
 
 type removeTodolistACType = ReturnType<typeof removeTodolistAC>
 export const removeTodolistAC = (todolistId1: string) => {
@@ -32,15 +32,10 @@ export const removeTodolistAC = (todolistId1: string) => {
     } as const
 }
 
-type addTodolistACType = ReturnType<typeof addTodolistAC>
+export type addTodolistACType = ReturnType<typeof addTodolistAC>
 export const addTodolistAC = (newTodolistTitle: string) => {
     return {
-        type: 'ADD-TODOLIST',
-        payload: {
-            newTodolistTitle
-        }
-
-    } as const
+        type: 'ADD-TODOLIST', newTodolistTitle, todolistId: v1()} as const
 }
 
 type changeTodolistTitleACType = ReturnType<typeof changeTodolistTitleAC>
