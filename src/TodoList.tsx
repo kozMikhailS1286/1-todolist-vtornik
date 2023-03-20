@@ -2,10 +2,9 @@ import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
-import IconButton from '@mui/material/IconButton/IconButton';
+import IconButton from "@mui/material/IconButton/IconButton";
 import {Delete} from "@mui/icons-material";
-import {Button} from "@mui/material";
-import {SuperCheckBox} from "./components/SuperCheckBox";
+import {Button, Checkbox} from "@mui/material";
 
 
 export type TaskType = {
@@ -44,10 +43,6 @@ export function Todolist(props: PropsType) {
     const onActiveClickHandler = () => props.changeFilter("active", props.id);
     const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
 
-    const changeStatusHandler = (tId: string, checkedValue: boolean) => {
-            props.changeTaskStatus(tId, checkedValue, props.id);
-    }
-
     return <div>
         <h3> <EditableSpan value={props.title} onChange={changeTodolistTitle} />
             <IconButton onClick={removeTodolist}>
@@ -69,13 +64,11 @@ export function Todolist(props: PropsType) {
 
 
                     return <div key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <SuperCheckBox callBack={(checkedValue)=>changeStatusHandler} isDone={t.isDone}/>
-                        {/*<input type={"checkbox"} checked={t.isDone} color="primary" onChange={onChangeHandler}/>*/}
-                        {/*<Checkbox*/}
-                        {/*    checked={t.isDone}*/}
-                        {/*    color="primary"*/}
-                        {/*    onChange={onChangeHandler}*/}
-                        {/*/>*/}
+                        <Checkbox
+                            checked={t.isDone}
+                            color="primary"
+                            onChange={onChangeHandler}
+                        />
 
                         <EditableSpan value={t.title} onChange={onTitleChangeHandler} />
                         <IconButton onClick={onClickHandler}>
